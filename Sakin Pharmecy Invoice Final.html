@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Send SMS via Pushbullet</title>
+  <title>Send SMS via AirDroid</title>
 </head>
 <body>
 
@@ -14,38 +14,16 @@
 <button onclick="sendSMS()">Send SMS</button>
 
 <script>
-// Function to send SMS using Pushbullet
+// Function to send SMS using AirDroid (via web interface)
 function sendSMS() {
   var phoneNumber = document.getElementById('phoneNumber').value;
   var message = document.getElementById('messageText').value;
 
-  // Make a Pushbullet API call to send SMS (via Pushbullet's API)
-  var pushbulletApiKey = o.zjvRcFlcNprKWWBzN7ieJtWxKZ71I2mL;  // Replace with your Pushbullet API Key
+  // AirDroid web URL for sending SMS (note: you may need to login to your AirDroid account)
+  var apiUrl = `https://web.airdroid.com/sms/send?number=${phoneNumber}&message=${message}`;
 
-  // Prepare the message
-  var data = {
-    type: "note",               // SMS uses "note" type
-    title: "SMS from PC",       // Title of the note (you can customize it)
-    body: message,             // SMS message body
-    email: phoneNumber         // The phone number to send SMS to (ensure it's linked)
-  };
-
-  fetch("https://api.pushbullet.com/v2/pushes", {
-    method: "POST",
-    headers: {
-      "Access-Token": pushbulletApiKey,
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(data)
-  })
-  .then(response => response.json())
-  .then(data => {
-    alert("SMS Sent via Pushbullet!");
-  })
-  .catch(error => {
-    console.error("Error:", error);
-    alert("Failed to send SMS.");
-  });
+  // Open AirDroid web interface to send SMS
+  window.open(apiUrl, '_blank');
 }
 </script>
 
