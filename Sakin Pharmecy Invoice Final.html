@@ -1,38 +1,93 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Discount Calculator</title>
+  <meta charset="UTF-8">
+  <title>OMR Sheet (1-100)</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      font-size: 14px;
+    }
+    h1 {
+      text-align: center;
+    }
+    .question {
+      display: flex;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .question-number {
+      width: 60px;
+      font-weight: bold;
+    }
+    .options {
+      display: flex;
+      gap: 20px;
+    }
+    .options label {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    input[type="radio"] {
+      appearance: none;
+      width: 16px;
+      height: 16px;
+      border: 2px solid #555;
+      border-radius: 50%;
+      display: inline-block;
+      position: relative;
+    }
+    input[type="radio"]:checked::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      background: black;
+      border-radius: 50%;
+      position: absolute;
+      top: 3px;
+      left: 3px;
+    }
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+    .column {
+      width: 48%;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+    }
+  </style>
 </head>
 <body>
-
-  <label for="value1">Product Price:</label><br>
-  <input type="number" id="value1" placeholder="Enter product price"><br><br>
-
-  <label for="value2">Sale Price:</label><br>
-  <input type="number" id="value2" placeholder="Enter sale price"><br><br>
-
-  <label for="result">Discount Percentage:</label><br>
-  <input type="text" id="result" placeholder="Discount (%)" readonly><br>
-
-  <script>
-    const val1 = document.getElementById('value1');
-    const val2 = document.getElementById('value2');
-    const result = document.getElementById('result');
-
-    function calculateDiscount() {
-      const productPrice = parseFloat(val1.value);
-      const salePrice = parseFloat(val2.value);
-      if (!isNaN(productPrice) && !isNaN(salePrice) && productPrice !== 0) {
-        const discount = ((productPrice - salePrice) / productPrice) * 100;
-        result.value = discount.toFixed(2);
-      } else {
-        result.value = 'Invalid';
-      }
-    }
-
-    val1.addEventListener('input', calculateDiscount);
-    val2.addEventListener('input', calculateDiscount);
-  </script>
-
+  <h1>OMR Sheet - Questions 1 to 100</h1>
+  <form action="/submit" method="post">
+    <div class="container">
+      <div class="column">
+        <!-- Questions 1–50 -->
+        <!-- Repeats for 1 to 50 -->
+        <!-- START QUESTIONS 1-50 -->
+        <!-- This part is generated -->
+        <!-- END QUESTIONS 1-50 -->
+        <!-- Inserted below -->
+        %QUESTIONS_1_50%
+      </div>
+      <div class="column">
+        <!-- Questions 51–100 -->
+        <!-- START QUESTIONS 51-100 -->
+        <!-- This part is generated -->
+        <!-- END QUESTIONS 51-100 -->
+        <!-- Inserted below -->
+        %QUESTIONS_51_100%
+      </div>
+    </div>
+    <button type="submit">Submit</button>
+  </form>
 </body>
 </html>
+
