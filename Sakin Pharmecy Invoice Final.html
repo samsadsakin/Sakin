@@ -3,85 +3,96 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>OMR Sheet (1-100)</title>
+  <title>OMR Bubble Sheet (Interactive)</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      margin: 20px;
-      font-size: 14px;
+      margin: 40px;
     }
-    h1 {
-      text-align: center;
-    }
-    .question {
-      display: flex;
-      align-items: center;
-      margin-bottom: 8px;
-    }
-    .question-number {
-      width: 60px;
-      font-weight: bold;
-    }
-    .options {
-      display: flex;
+    .omr-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
       gap: 20px;
     }
-    .options label {
+    .column {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .row {
       display: flex;
       align-items: center;
-      gap: 5px;
+      font-size: 12px;
     }
-    input[type="radio"] {
-      appearance: none;
-      width: 16px;
-      height: 16px;
-      border: 2px solid #555;
+    .number {
+      width: 20px;
+      text-align: right;
+      margin-right: 8px;
+    }
+    .bubbles {
+      display: flex;
+      gap: 8px;
+    }
+    .bubble {
+      width: 14px;
+      height: 14px;
+      border: 1px solid #000;
       border-radius: 50%;
       display: inline-block;
-      position: relative;
+      cursor: pointer;
     }
-    input[type="radio"]:checked::before {
-      content: "";
-      width: 8px;
-      height: 8px;
-      background: black;
-      border-radius: 50%;
-      position: absolute;
-      top: 3px;
-      left: 3px;
-    }
-    .container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-    }
-    .column {
-      width: 48%;
-    }
-    button {
-      margin-top: 20px;
-      padding: 10px 20px;
-      font-size: 16px;
+    .bubble.selected {
+      background-color: black;
     }
   </style>
 </head>
 <body>
-  <h1>OMR Sheet - Questions 1 to 100</h1>
-  <form action="/submit" method="post">
-    <div class="container">
-      <div class="column">
-        <!-- Questions 1–50 -->
-        <!-- Repeats for 1 to 50 -->
-        <!-- START QUESTIONS 1-50 -->
-        <!-- This part is generated -->
-        <!-- END QUESTIONS 1-50 -->
-        <!-- Inserted below -->
-        %QUESTIONS_1_50%
-      </div>
-      <div class="column">
-        <!-- Questions 51–100 -->
-        <!-- START QUESTIONS 51-100 -->
-        <!-- This part is generated -->
-        <!-- END QUESTIONS 51-100 -->
-        <!-- Inserted below -->
-        %QUESTIONS_51_100%
+  <h2 style="text-align:center;">OMR Answer Sheet (1–100)</h2>
+  <div class="omr-grid" id="omrGrid">
+    <!-- JavaScript generates bubbles here -->
+  </div>
+
+  <script>
+    const grid = document.getElementById("omrGrid");
+
+    for (let col = 0; col < 5; col++) {
+      const column = document.createElement("div");
+      column.className = "column";
+
+      for (let row = 1; row <= 20; row++) {
+        const qNum = col * 20 + row;
+        const rowDiv = document.createElement("div");
+        rowDiv.className = "row";
+
+        const number = document.createElement("div");
+        number.className = "number";
+        number.textContent = qNum;
+
+        const bubbles = document.createElement("div");
+        bubbles.className = "bubbles";
+
+        ['A', 'B', 'C', 'D'].forEach(option => {
+          const bubble = document.createElement("div");
+          bubble.className = "bubble";
+          bubble.dataset.question = qNum;
+          bubble.dataset.option = option;
+
+          bubble.addEventListener("click", () => {
+            document.querySelectorAll(`.bubble[data-question='${qNum}']`)
+              .forEach(b => b.classList.remove("selected"));
+            bubble.classList.add("selected");
+          });
+
+          bubbles.appendChild(bubble);
+        });
+
+        rowDiv.appendChild(number);
+        rowDiv.appendChild(bubbles);
+        column.appendChild(rowDiv);
+      }
+
+      grid.appendChild(column);
+    }
+  </script>
+</body>
+</html>
