@@ -1,32 +1,37 @@
-
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Percentage Calculator</title>
+  <title>Discount Calculator</title>
 </head>
 <body>
 
-  <input type="number" id="value1" placeholder="Enter first value">
-  <input type="number" id="value2" placeholder="Enter second value">
-  <input type="text" id="result" placeholder="Result (%)" readonly>
+  <label for="value1">Product Price:</label><br>
+  <input type="number" id="value1" placeholder="Enter product price"><br><br>
+
+  <label for="value2">Sale Price:</label><br>
+  <input type="number" id="value2" placeholder="Enter sale price"><br><br>
+
+  <label for="result">Discount Percentage:</label><br>
+  <input type="text" id="result" placeholder="Discount (%)" readonly><br>
 
   <script>
     const val1 = document.getElementById('value1');
     const val2 = document.getElementById('value2');
     const result = document.getElementById('result');
 
-    function calculatePercentage() {
-      const num1 = parseFloat(val1.value);
-      const num2 = parseFloat(val2.value);
-      if (!isNaN(num1) && !isNaN(num2) && num2 !== 0) {
-        result.value = ((num1 / num2) * 100).toFixed(2);
+    function calculateDiscount() {
+      const productPrice = parseFloat(val1.value);
+      const salePrice = parseFloat(val2.value);
+      if (!isNaN(productPrice) && !isNaN(salePrice) && productPrice !== 0) {
+        const discount = ((productPrice - salePrice) / productPrice) * 100;
+        result.value = discount.toFixed(2);
       } else {
         result.value = 'Invalid';
       }
     }
 
-    val1.addEventListener('input', calculatePercentage);
-    val2.addEventListener('input', calculatePercentage);
+    val1.addEventListener('input', calculateDiscount);
+    val2.addEventListener('input', calculateDiscount);
   </script>
 
 </body>
