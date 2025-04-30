@@ -1,53 +1,33 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Send SMS via Pushbullet</title>
+  <title>Percentage Calculator</title>
 </head>
 <body>
 
-<h2>Send SMS</h2>
+  <input type="number" id="value1" placeholder="Enter first value">
+  <input type="number" id="value2" placeholder="Enter second value">
+  <input type="text" id="result" placeholder="Result (%)" readonly>
 
-<!-- Input form -->
-<input type="text" id="phoneNumber" placeholder="Enter phone number" required><br><br>
-<textarea id="messageText" placeholder="Enter your message" required></textarea><br><br>
-<button onclick="sendSMS()">Send SMS</button>
+  <script>
+    const val1 = document.getElementById('value1');
+    const val2 = document.getElementById('value2');
+    const result = document.getElementById('result');
 
-<script>
-// Function to send SMS using Pushbullet
-function sendSMS() {
-  var phoneNumber = document.getElementById('phoneNumber').value;
-  var message = document.getElementById('messageText').value;
+    function calculatePercentage() {
+      const num1 = parseFloat(val1.value);
+      const num2 = parseFloat(val2.value);
+      if (!isNaN(num1) && !isNaN(num2) && num2 !== 0) {
+        result.value = ((num1 / num2) * 100).toFixed(2);
+      } else {
+        result.value = 'Invalid';
+      }
+    }
 
-  // Make a Pushbullet API call to send SMS (via Pushbullet's API)
-  var pushbulletApiKey = 'o.UeA5RRn2m5cMHc7iaEuroxodilZN4KA1';  // Replace with your Pushbullet API Key
-
-  // Prepare the message
-  var data = {
-    type: "note",               // SMS uses "note" type
-    title: "SMS from PC",       // Title of the note (you can customize it)
-    body: message,             // SMS message body
-    email: phoneNumber         // The phone number to send SMS to (ensure it's linked)
-  };
-
-  fetch("https://api.pushbullet.com/v2/pushes", {
-    method: "POST",
-    headers: {
-      "Access-Token": pushbulletApiKey,
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(data)
-  })
-  .then(response => response.json())
-  .then(data => {
-    alert("SMS Sent via Pushbullet!");
-  })
-  .catch(error => {
-    console.error("Error:", error);
-    alert("Failed to send SMS.");
-  });
-}
-</script>
+    val1.addEventListener('input', calculatePercentage);
+    val2.addEventListener('input', calculatePercentage);
+  </script>
 
 </body>
 </html>
