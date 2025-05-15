@@ -1,128 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>OMR Bubble Sheet (Interactive)</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 40px;
-    }
-    .omr-grid {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 20px;
-    }
-    .column {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .row {
-      display: flex;
-      align-items: center;
-      font-size: 12px;
-    }
-    .number {
-      width: 20px;
-      text-align: right;
-      margin-right: 8px;
-    }
-    .bubbles {
-      display: flex;
-      gap: 8px;
-    }
-    .bubble {
-      width: 14px;
-      height: 14px;
-      border: 1px solid #000;
-      border-radius: 50%;
-      display: inline-block;
-      cursor: pointer;
-    }
-    .bubble.selected {
-      background-color: black;
-    }
-    #timer {
-      font-size: 20px;
-      margin-top: 10px;
-    }
-  </style>
+  <title>Send SMS</title>
 </head>
 <body>
-  <div style="text-align:center; margin-bottom: 20px;">
-    <button onclick="startTimer()">Start</button>
-    <div id="timer"></div>
-  </div>
+  <h2>Send SMS</h2>
+  <form id="smsForm">
+    <label for="number">Phone Number:</label><br>
+    <input type="text" id="number" name="number" required><br><br>
 
-  <h2 style="text-align:center;">OMR Answer Sheet (1–100)</h2>
-  <div class="omr-grid" id="omrGrid">
-    <!-- JavaScript generates bubbles here -->
-  </div>
+    <label for="message">Message:</label><br>
+    <textarea id="message" name="message" required></textarea><br><br>
+
+    <button type="submit">Send SMS</button>
+  </form>
+
+  <p id="status"></p>
 
   <script>
-    const grid = document.getElementById("omrGrid");
+    document.getElementById("smsForm").addEventListener("submit", function(e) {
+      e.preventDefault();
 
-    for (let col = 0; col < 5; col++) {
-      const column = document.createElement("div");
-      column.className = "column";
+      const number = document.getElementById("number").value;
+      const message = encodeURIComponent(document.getElementById("message").value);
+      const apiKey = "EmI9W2jPT3NQ7PavOwNG";
+      const senderId = "Random";
+      const type = "text";
 
-      for (let row = 1; row <= 20; row++) {
-        const qNum = col * 20 + row;
-        const rowDiv = document.createElement("div");
-        rowDiv.className = "row";
+      const url = `http://bulksmsbd.net/api/smsapi?api_key=${apiKey}&type=${type}&number=${number}&senderid=${senderId}&message=${message}`;
 
-        const number = document.createElement("div");
-        number.className = "number";
-        number.textContent = qNum;
-
-        const bubbles = document.createElement("div");
-        bubbles.className = "bubbles";
-
-        ['A', 'B', 'C', 'D'].forEach(option => {
-          const bubble = document.createElement("div");
-          bubble.className = "bubble";
-          bubble.dataset.question = qNum;
-          bubble.dataset.option = option;
-
-          bubble.addEventListener("click", () => {
-            document.querySelectorAll(`.bubble[data-question='${qNum}']`)
-              .forEach(b => b.classList.remove("selected"));
-            bubble.classList.add("selected");
-          });
-
-          bubbles.appendChild(bubble);
+      fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById("status").textContent = "Message sent: " + JSON.stringify(data);
+        })
+        .catch(error => {
+          document.getElementById("status").textContent = "Error sending message: " + error;
         });
-
-        rowDiv.appendChild(number);
-        rowDiv.appendChild(bubbles);
-        column.appendChild(rowDiv);
-      }
-
-      grid.appendChild(column);
-    }
-
-    let countdownInterval;
-
-    function startTimer() {
-      let duration = 60 * 60; // 60 minutes in seconds
-      const display = document.getElementById('timer');
-
-      clearInterval(countdownInterval); // Reset if already running
-
-      countdownInterval = setInterval(() => {
-        const minutes = Math.floor(duration / 60);
-        const seconds = duration % 60;
-
-        display.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-
-        if (--duration < 0) {
-          clearInterval(countdownInterval);
-          display.textContent = "Time's up!";
-          alert("Time's up!");
-        }
-      }, 1000);
-    }
+    });
   </script>
 </body>
 </html>
