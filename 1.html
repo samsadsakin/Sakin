@@ -276,7 +276,8 @@ function GetRate(v) { //01
                   <input type="number" class="form-control text-end" id="fGST" name="fGST" onchange="GetTotal()" required>
                 </div>
                 <div class="input-group mb-3">
-                  <button type="submit" class="btn btn-primary" id="submitBtn" onclick="disableSubmit(this)">Save</button>
+                  <button type="submit" class="btn btn-primary" id="submitBtn" onclick="disableSubmit(this, event)">Save</button>
+
 
                 </div>
               </div>
@@ -286,18 +287,28 @@ function GetRate(v) { //01
       </form>
     </div>
 <script>
-function disableSubmit(btn) {
+function disableSubmit(btn, event) {
+  event.preventDefault(); // ✅ Stop the default submit action
+
   const gstField = document.getElementById("fGST");
+  const invnoField = document.querySelector('input[name="invno"]');
+
+  if (!invnoField.value.trim()) {
+    alert("Invoice Number is required before submitting.");
+    invnoField.focus();
+    return;
+  }
 
   if (!gstField.value.trim()) {
     alert("Paid Amt (fGST) is required before submitting.");
     gstField.focus();
-    return false; // stop form submission
+    return;
   }
 
+  // Prevent multiple submissions
   btn.disabled = true;
-  btn.innerText = 'Saving...'; // optional feedback
-  btn.form.submit(); // still submit the form
+  btn.innerText = 'Saving...';
+  btn.form.submit(); // ✅ Submit manually only once
 }
 </script>
 
