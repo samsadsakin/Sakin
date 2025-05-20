@@ -285,13 +285,22 @@ function GetRate(v) { //01
         </div>
       </form>
     </div>
-   <script>
-  function disableSubmit(btn) {
+<script>
+function disableSubmit(btn) {
+  const gstField = document.getElementById("fGST");
+
+  if (!gstField.value.trim()) {
+    alert("Paid Amt (fGST) is required before submitting.");
+    gstField.focus();
+    return false; // stop form submission
+  }
+
   btn.disabled = true;
-  btn.innerText = 'Saving...'; // Optional: show saving state
-  btn.form.submit(); // Ensures form still submits
+  btn.innerText = 'Saving...'; // optional feedback
+  btn.form.submit(); // still submit the form
 }
 </script>
+
 
     <!-- Bootstrap Bundle JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
