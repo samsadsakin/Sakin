@@ -288,27 +288,50 @@ function GetRate(v) { //01
     </div>
 <script>
 function disableSubmit(btn, event) {
-  event.preventDefault(); // ✅ Stop the default submit action
+  event.preventDefault(); // ডিফল্ট ফর্ম সাবমিশন বন্ধ করুন
 
   const gstField = document.getElementById("fGST");
   const invnoField = document.querySelector('input[name="invno"]');
 
   if (!invnoField.value.trim()) {
-    alert("Invoice Number is required before submitting.");
+    alert("Invoice Number এর জন্য অপেক্ষা করুন ");
     invnoField.focus();
     return;
   }
 
   if (!gstField.value.trim()) {
-    alert("Paid Amt (fGST) is required before submitting.");
+    alert("Paid Amt পূরণ করুন ");
     gstField.focus();
     return;
   }
 
-  // Prevent multiple submissions
   btn.disabled = true;
   btn.innerText = 'Saving...';
-  btn.form.submit(); // ✅ Submit manually only once
+
+  const form = btn.form;
+  const formData = new FormData(form);
+
+  fetch(form.action, {
+    method: 'POST',
+    body: formData,
+    mode: 'no-cors' // CORS সমস্যা এড়াতে
+  })
+  .then(() => {
+    alert("✅ ইনভয়েস সফলভাবে সংরক্ষণ করা হয়েছে");
+    
+    // ✅ 1.5 সেকেন্ড পরে পেজ রিলোড
+    setTimeout(() => {
+      location.reload();
+    }, 1500);
+  })
+  .catch(error => {
+    console.error("Error:", error);
+    alert("❌ ডেটা পাঠাতে সমস্যা হয়েছে");
+  })
+  .finally(() => {
+    btn.disabled = false;
+    btn.innerText = 'Save';
+  });
 }
 </script>
 
