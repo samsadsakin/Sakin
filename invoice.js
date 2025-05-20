@@ -84,7 +84,7 @@ function SetCurrentDate()
     $(document).ready(function () {
         SetCurrentDate();
         MaxInv();
-        FillDataList();
+        
      
        
 
