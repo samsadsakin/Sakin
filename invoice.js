@@ -100,7 +100,7 @@ function MaxInv()
         function (data) {
             
              $('input[name="invno"]').val(data);
-	     $('input[name="seller_nm"]').val(1);
+	     
              
              
         })
