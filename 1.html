@@ -276,7 +276,8 @@ function GetRate(v) { //01
                   <input type="number" class="form-control text-end" id="fGST" name="fGST" onchange="GetTotal()" required>
                 </div>
                 <div class="input-group mb-3">
-                  <button type="submit" class="btn btn-primary">Save</button>
+                  <button type="submit" class="btn btn-primary" id="submitBtn" onclick="disableSubmit(this)">Save</button>
+
                 </div>
               </div>
             </div>
@@ -284,38 +285,12 @@ function GetRate(v) { //01
         </div>
       </form>
     </div>
-    <!-- Place this before </body> -->
-
-<div class="modal fade" id="urlModal" tabindex="-1" aria-labelledby="urlModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="urlModalLabel">Quick Access Button</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p>Welcome</p>
-         <div class="row">
-          <div class="col-6">
-            <a href="https://docs.google.com/spreadsheets/d/13KpVguFvnOGnTEKRzDUGfJn6-CEnv6diojmBXv_F7Iw/edit?gid=855804091#gid=855804091" class="btn btn-success w-100 mb-2" target="_blank">📩Inv Sms</a>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-6">
-            <a href="https://docs.google.com/spreadsheets/d/1t3vH-IAjoGwsB5ZsIOramhOr-BDIRnsJPep7TniuLOQ/edit?gid=1899307929#gid=1899307929" class="btn btn-success w-100 mb-2" target="_blank">🖨️Print Memo</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Script to trigger modal on page load -->
-<script>
-  window.addEventListener('DOMContentLoaded', function () {
-    var myModal = new bootstrap.Modal(document.getElementById('urlModal'));
-    myModal.show();
-  });
+   <script>
+  function disableSubmit(btn) {
+  btn.disabled = true;
+  btn.innerText = 'Saving...'; // Optional: show saving state
+  btn.form.submit(); // Ensures form still submits
+}
 </script>
 
     <!-- Bootstrap Bundle JS -->
