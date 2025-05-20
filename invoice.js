@@ -96,7 +96,7 @@ function SetCurrentDate()
 
 function MaxInv()
 {
-        $.getJSON("https://script.google.com/macros/s/AKfycby7acPEOAgjA9Hfit_XF2xShJ1SuI_-OVf0xC1T5rMxDcdWEFYEu0Yq_Dn4Jltc63FIRw/exec?page=max", 
+        $.getJSON("https://script.google.com/macros/s/AKfycbwHx916ly7bIkmPEJ06pZsGEaDoCoMjFSSPQ5Gf75BLCsfVWISMUptBjEOw83Apdo17/exec?page=max", 
         function (data) {
             
              $('input[name="invno"]').val(data);
