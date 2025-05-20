@@ -87,8 +87,9 @@
                 </tr>
               </thead>
               <tbody id="TBody">
-                   <td><input type="number" class="form-control text-end" name="invno" ></td> 
-                  <tr id="TRow" class="d-none">
+                <tr id="TRow" class="d-none">
+                 <td><input type="number" class="form-control text-end" name="qty" onchange="Calc(this);"></td>
+                  
                   <th scope="row">1</th>
                   <td width="50%">
                     <input class="form-control" name="item_nm" list="mylist" autocomplete="off" onchange="GetRate(this)">
