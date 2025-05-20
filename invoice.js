@@ -82,10 +82,10 @@ function SetCurrentDate()
 		
 	} 
     $(document).ready(function () {
-	MaxInv();
+	
         SetCurrentDate();
         MaxInv();
-        
+	FillDataList();        
      
        
 
@@ -97,7 +97,7 @@ function SetCurrentDate()
 
 function MaxInv()
 {
-        $.getJSON("https://script.google.com/macros/s/AKfycbwHx916ly7bIkmPEJ06pZsGEaDoCoMjFSSPQ5Gf75BLCsfVWISMUptBjEOw83Apdo17/exec?page=max", 
+        $.getJSON("https://script.google.com/macros/s/AKfycbyy6ICd0exDvwSCcSy5L0hw2WwS1oaKCOoWoHNErQBf9UqOfianGYaAqCBjm4S0vvuyiQ/exec?page=max", 
         function (data) {
             
              $('input[name="invno"]').val(data);
@@ -108,7 +108,7 @@ function MaxInv()
 }
 function FillDataList()
 {
-        $.getJSON("https://script.google.com/macros/s/AKfycbwHx916ly7bIkmPEJ06pZsGEaDoCoMjFSSPQ5Gf75BLCsfVWISMUptBjEOw83Apdo17/exec?page=dropdown", 
+        $.getJSON("https://script.google.com/macros/s/AKfycbyy6ICd0exDvwSCcSy5L0hw2WwS1oaKCOoWoHNErQBf9UqOfianGYaAqCBjm4S0vvuyiQ/exec?page=dropdown", 
         function (data) {                              //01
           var Options="";                              
           $.each(data, function(key, value)            //02
@@ -121,7 +121,7 @@ function FillDataList()
 function GetRate(v) { //01
     var index = $(v).parent().parent().index();  //02
     var Item = $(v).val(); //03
-    $.getJSON("https://script.google.com/macros/s/AKfycbwHx916ly7bIkmPEJ06pZsGEaDoCoMjFSSPQ5Gf75BLCsfVWISMUptBjEOw83Apdo17/exec?page=getrate&no="+Item,
+    $.getJSON("https://script.google.com/macros/s/AKfycbyy6ICd0exDvwSCcSy5L0hw2WwS1oaKCOoWoHNErQBf9UqOfianGYaAqCBjm4S0vvuyiQ/exec?page=getrate&no="+Item,
     function (data) { //04
     if (data > 0) {
     document.getElementsByName("rate")[index].value = data;	//05
