@@ -82,6 +82,7 @@ function SetCurrentDate()
 		
 	} 
     $(document).ready(function () {
+	MaxInv();
         SetCurrentDate();
         MaxInv();
         
